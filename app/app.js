@@ -12,7 +12,8 @@ angular.module('CodeMirror', ['ui.codemirror'])
 
                 $scope.codeEditorOptions = {
                     lineWrapping : true,
-                    //lineNumbers: true,
+                    indentUnit: 4,
+                    lineNumbers: false,
                     readOnly: 'nocursor',
                     mode: 'javascript'
                 };
@@ -50,6 +51,7 @@ angular.module('CodeMirror', ['ui.codemirror'])
             link: function(scope, element, attrs, snippetCtrl) {
                 var scrolling = true,
                     lineWrapping = true,
+                    lineNumbers = false,
                     cmScroll = element.find('.CodeMirror-scroll');
 
                 scope.toggleScroll = function(event) {
@@ -82,6 +84,11 @@ angular.module('CodeMirror', ['ui.codemirror'])
                         $(event.delegateTarget).css({'text-decoration':'line-through'});
                         scope.codeEditorOptions.lineWrapping = false;
                     }
+                }
+
+                scope.toggleLineNumbers = function() {
+                    lineNumbers = !lineNumbers;
+                    scope.codeEditorOptions.lineNumbers = lineNumbers;
                 }
             }
         }
