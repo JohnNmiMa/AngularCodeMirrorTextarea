@@ -17,28 +17,35 @@ angular.module('CodeMirror', ['ui.codemirror'])
                     mode: 'javascript'
                 };
 
-                $scope.toggleEdit = function(snippetCode) {
+                $scope.toggleEdit = function(snippetData) {
                     $scope.isEditing = !$scope.isEditing
                     if ($scope.isEditing) {
                         $scope.codeEditorOptions.readOnly = false;
                         $('.CodeMirror').addClass('isEditing');
                     } else {
-                        $scope.codeEditorOptions.readOnly = 'nocursor';
-                        $('.CodeMirror').removeClass('isEditing');
-                        saveCode(snippetCode);
+                        saveCode(snippetData.code);
+                        terminateEditing();
                     }
                 };
 
                 $scope.cancelEdit = function() {
                     if ($scope.isEditing) {
-                        $scope.toggleEdit(localStorage['snippetCodeModel']);
+                        $scope.isEditing = false;
                         $scope.snippetData.code = localStorage['snippetCodeModel'];
+                        terminateEditing();
                     }
                 };
+
+                function terminateEditing() {
+                    $('.CodeMirror').removeClass('isEditing');
+                    // This line sets the textarea to readonly
+                    $scope.codeEditorOptions.readOnly = 'nocursor';
+                }
 
                 function saveCode(codeModel) {
                     localStorage['snippetCodeModel'] = codeModel;
                 }
+
             },
             link: function(scope, element, attrs, snippetCtrl) {
                 var scrolling = true,
