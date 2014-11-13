@@ -1,0 +1,16 @@
+<form>
+    <button type="button" class="btn toggleEdit"
+            ng-class="{'btn-primary':editBtnText == 'Edit', 'btn-default':editBtnText == 'Save'}"
+            ng-click="toggleEdit(snippetData)"> {{editBtnText}} </button>
+    <div class="snippetBar">
+        <div class="rightSnippetBar">
+            <button type="button" class="btn toggleScroll btn-primary"
+                    ng-click="toggleScroll($event)">Scroll</button>
+            <button type="button" class="btn toggleLineWrap btn-primary"
+                    ng-click="toggleLineWrap($event)">Wrap</button>
+        </div>
+    </div>
+    <textarea ui-codemirror ui-codemirror-opts="codeEditorOptions"
+              ng-model="snippetData.code"></textarea>
+    <div class="codeModel"> {{snippetData.code}} </div>
+</form>
