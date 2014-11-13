@@ -6,6 +6,7 @@ angular.module('CodeMirror', ['ui.codemirror'])
             scope: true,
             templateUrl: './snippet.html',
             controller: function($scope, $element, $attrs) {
+                $scope.isEditing = false,
                 $scope.snippetData = {};
                 $scope.snippetData.code = localStorage['snippetCodeModel'];
 
@@ -16,16 +17,22 @@ angular.module('CodeMirror', ['ui.codemirror'])
                     mode: 'javascript'
                 };
 
-                $scope.editBtnText = "Edit";
-                $scope.toggleEdit = function(snippetData) {
-                    $scope.editBtnText = ($scope.editBtnText === "Edit") ? "Save" : "Edit";
-                    if ($scope.editBtnText === 'Save') {
+                $scope.toggleEdit = function(snippetCode) {
+                    $scope.isEditing = !$scope.isEditing
+                    if ($scope.isEditing) {
                         $scope.codeEditorOptions.readOnly = false;
                         $('.CodeMirror').addClass('isEditing');
                     } else {
                         $scope.codeEditorOptions.readOnly = 'nocursor';
                         $('.CodeMirror').removeClass('isEditing');
-                        saveCode(snippetData.code);
+                        saveCode(snippetCode);
+                    }
+                };
+
+                $scope.cancelEdit = function() {
+                    if ($scope.isEditing) {
+                        $scope.toggleEdit(localStorage['snippetCodeModel']);
+                        $scope.snippetData.code = localStorage['snippetCodeModel'];
                     }
                 };
 

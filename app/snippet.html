@@ -1,16 +1,19 @@
 <form>
-    <button type="button" class="btn toggleEdit"
-            ng-class="{'btn-primary':editBtnText == 'Edit', 'btn-default':editBtnText == 'Save'}"
-            ng-click="toggleEdit(snippetData)"> {{editBtnText}} </button>
+    <button type="button" class="btn toggleEdit btn-primary"
+            ng-click="toggleEdit(snippetData.code)"> {{isEditing ? 'Save' : 'Edit'}} </button>
+    <button type="button" class="btn cancelEdit btn-primary" ng-click="cancelEdit()"> Cancel </button>
     <div class="snippetBar">
         <div class="rightSnippetBar">
-            <button type="button" class="btn toggleScroll btn-primary"
+            <button type="button" class="btn toggleScroll btn-default"
                     ng-click="toggleScroll($event)">Scroll</button>
-            <button type="button" class="btn toggleLineWrap btn-primary"
+            <button type="button" class="btn toggleLineWrap btn-default"
                     ng-click="toggleLineWrap($event)">Wrap</button>
         </div>
     </div>
     <textarea ui-codemirror ui-codemirror-opts="codeEditorOptions"
               ng-model="snippetData.code"></textarea>
-    <div class="codeModel"> {{snippetData.code}} </div>
+    <div class="codeModel">
+        <p>The raw ng-model from codemirror</p>
+        <code>{{snippetData.code}}</code>
+    </div>
 </form>
