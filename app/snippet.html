@@ -5,15 +5,18 @@
     <div class="snippetBar">
         <div class="rightSnippetBar">
             <button type="button" class="btn toggleScroll btn-default"
-                    ng-click="toggleScroll($event)">Scroll</button>
+                    ng-style="scrollStrikeStyle"
+                    ng-click="toggleScroll()">Scroll</button>
             <button type="button" class="btn toggleLineWrap btn-default"
-                    ng-click="toggleLineWrap($event)">Wrap</button>
+                    ng-style="wrapStrikeStyle"
+                    ng-click="toggleLineWrap()">Wrap</button>
             <button type="button" class="btn toggleLineNumbers btn-default"
-                    ng-click="toggleLineNumbers()">#</button>
+                    ng-style="lineNumberStrikeStyle"
+                    ng-click="toggleLineNumbers()">Line #</button>
         </div>
     </div>
     <textarea ui-codemirror ui-codemirror-opts="codeEditorOptions"
-              ng-model="snippetData.code"></textarea>
+              ng-model="snippetData.code" ui-refresh="refreshIt"></textarea>
     <div class="codeModel">
         <p>The following is the raw ng-model from codemirror shown in a "pre" tag. Notice that the spaces and line returns are in the model. Persist this, not the codemirror generated html!</p>
         <pre> {{snippetData.code}} </pre>
