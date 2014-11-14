@@ -13,9 +13,13 @@
             <button type="button" class="btn toggleLineNumbers btn-default"
                     ng-style="lineNumberStrikeStyle"
                     ng-click="toggleLineNumbers()">Line #</button>
+            <select name="language" ng-model="snippetData.language" class="languageSelect"
+                    ng-options="lang.name for lang in languages">
+                <option value="">Language</option>
+            </select>
         </div>
     </div>
-    <textarea ui-codemirror ui-codemirror-opts="codeEditorOptions"
+    <textarea ui-codemirror="{ onLoad: codemirrorLoaded }" ui-codemirror-opts="codeEditorOptions"
               ng-model="snippetData.code" ui-refresh="refreshIt"></textarea>
     <div class="codeModel">
         <p>The following is the raw ng-model from codemirror shown in a "pre" tag. Notice that the spaces and line returns are in the model. Persist this, not the codemirror generated html!</p>

@@ -1,17 +1,34 @@
 angular.module('CodeMirror', ['ui.codemirror'])
 
-.directive('snippet', [function() {
+.constant('defaultLanguage', 'JavaScript')
+
+.directive('snippet', ['defaultLanguage', function(defaultLanguage) {
         return {
             restrict: 'E',
             scope: true,
             templateUrl: './snippet.html',
             controller: function($scope, $element, $attrs) {
+                var codeMirrorEditor = {},
+                    codeMirrorDocument = {};
+
                 $scope.snippetData = {};
                 $scope.snippetData.code = localStorage['snippetCodeModel'];
+                $scope.languages = CodeMirror.modeInfo;
+                $scope.snippetData.language = {name:'bogus', mode:'javascript'}; // use this to init the select tag
+                $scope.snippetData.language = $.grep($scope.languages, function(e){ return e.name === defaultLanguage; })[0];
 
                 $scope.isEditing = false;
                 $scope.lineWrapping = false;
                 $scope.lineNumbers = true;
+
+                $scope.$watch('snippetData.language', function(data) {
+                    $scope.codeEditorOptions.mode = data.mode;
+                    // This uses the CodeMirror loadmode.js module to
+                    // lazy load the proper language mode module. This is way cool,
+                    // as you don't need to add all of the codemirror/mode/*/*.js mode files
+                    // in <script> tags. There ~85 of them.
+                    CodeMirror.autoLoadMode(codeMirrorEditor, data.mode);
+                });
 
                 // The codemirror editor options must be done in a controller
                 // (won't work in the link function)
@@ -21,6 +38,14 @@ angular.module('CodeMirror', ['ui.codemirror'])
                     lineNumbers: $scope.lineNumbers,
                     readOnly: 'nocursor',
                     mode: 'javascript'
+                };
+
+                $scope.codemirrorLoaded = function(editor) {
+                    codeMirrorEditor = editor;
+                    codeMirrorDocument = editor.getDoc();
+
+                    // Set the CodeMirror lazy loader to load modules from here
+                    CodeMirror.modeURL = "./bower_components/codemirror/mode/%N/%N.js";
                 };
             },
             link: function(scope, element, attrs, snippetCtrl) {
