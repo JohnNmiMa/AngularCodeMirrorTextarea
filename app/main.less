@@ -24,6 +24,7 @@ body {
         position:relative;
         padding:5px 15px;
         height:44px;
+        overflow: hidden;
     }
         .rightSnippetBar {
             position:absolute;
@@ -37,8 +38,14 @@ body {
                 text-decoration: line-through;
             }
             .languageSelect {
-                line-height: 1;
-                height:34px;
+                color: #333;
+                background-color: #fff;
+                border-color: #ccc;
+                outline: none !important;
+                padding:6px 12px;
+                background: url(arrow-down.png) no-repeat right;
+                background-size: 34px 34px;
+                -webkit-appearance: none;
             }
 
 .CodeMirror {
