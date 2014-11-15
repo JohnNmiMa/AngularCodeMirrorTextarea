@@ -20,7 +20,7 @@
         </div>
     </div>
     <textarea ui-codemirror="{ onLoad: codemirrorLoaded }" ui-codemirror-opts="codeEditorOptions"
-              ng-model="snippetData.code" ui-refresh="refreshIt"></textarea>
+              ng-model="snippetData.code" ui-refresh="refreshIt" placeholder="Add snippet code here"></textarea>
     <div class="codeModel">
         <p>The following is the raw ng-model from codemirror shown in a "pre" tag. Notice that the spaces and line returns are in the model. Persist this, not the codemirror generated html!</p>
         <pre> {{snippetData.code}} </pre>

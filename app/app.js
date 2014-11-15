@@ -54,6 +54,7 @@ angular.module('CodeMirror', ['ui.codemirror'])
 
                 var cmElement = element.find('.CodeMirror'),
                     cmScrollElement = element.find('.CodeMirror-scroll'),
+                    textareaElement = element.find('textarea');
                     scrolling = true,
                     textDecorationNoneStyle = {'text-decoration':'none'},
                     textDecorationLineThroughStyle = {'text-decoration':'line-through'};
@@ -62,9 +63,12 @@ angular.module('CodeMirror', ['ui.codemirror'])
                 scope.scrollStrikeStyle = textDecorationNoneStyle;
                 scope.wrapStrikeStyle = textDecorationLineThroughStyle;
                 scope.lineNumberStrikeStyle = textDecorationNoneStyle;
+                //scope.placeholderText = "";
 
                 scope.toggleEdit = function(snippetData) {
-                    scope.isEditing = !scope.isEditing
+                    scope.isEditing = !scope.isEditing;
+                    textareaElement.attr("placeholder", "Add snippet description here");
+                    //scope.placeholderText = "Add snippet description here";
                     if (scope.isEditing) {
                         scope.codeEditorOptions.readOnly = false;
                         cmElement.addClass('isEditing');
@@ -77,6 +81,8 @@ angular.module('CodeMirror', ['ui.codemirror'])
                 scope.cancelEdit = function() {
                     if (scope.isEditing) {
                         scope.isEditing = false;
+                        textareaElement.attr("placeholder", "");
+                        //scope.placeholderText = "";
                         scope.snippetData.code = localStorage['snippetCodeModel'];
                         terminateEditing();
                     }

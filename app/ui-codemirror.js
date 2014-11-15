@@ -18,6 +18,7 @@ angular.module('ui.codemirror', [])
                 throw new Error('ui-codemirror need CodeMirror to work... (o rly?)');
             }
 
+
             return function postLink(scope, iElement, iAttrs, ngModel) {
                 var options = uiCodemirrorConfig.codemirror || {},
                     opts = angular.extend({value: initialTextValue}, options,
